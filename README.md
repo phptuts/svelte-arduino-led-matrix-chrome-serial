@@ -32,9 +32,11 @@ Before you begin this tutorial you will need to turn on the experimental version
 
 7. Upload the sketch code below.
 
-8. Go to this led matrix website and start playing around.
+8. Go to this [led matrix website](https://phptuts.github.io/svelte-arduino-led-matrix-chrome-serial/).
 
 9. Click the connect button and select your serial port.
+
+10. Have fun!!! :)
 
 ## Arduino Sketch
 
