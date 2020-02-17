@@ -28,7 +28,7 @@ Before you begin this tutorial you will need to turn on the experimental version
 
 5. Wire CLK of Led Matrix to pin 11 of Arduino.
 
-6. Install the led matrix library found in this [tutorial](https://www.instructables.com/id/LED-Matrix-with-Arduino/).  Once you download it go to sketch -> include library -> add zip in the Arduino IDE.
+6. Install the led matrix library found in this [tutorial](https://www.instructables.com/id/LED-Matrix-with-Arduino/index.html).  Once you download it go to sketch -> include library -> add zip in the Arduino IDE.
 
 7. Upload the sketch code below.
 
