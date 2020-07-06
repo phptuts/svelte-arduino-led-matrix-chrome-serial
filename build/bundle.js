@@ -339,19 +339,17 @@ var app = (function () {
 
     function instance($$self, $$props, $$invalidate) {
     	let { isOn } = $$props;
-    	let { row } = $$props;
-    	let { col } = $$props;
+    	let { ledNumber } = $$props;
     	const dispatch = createEventDispatcher();
 
     	function onChangeLed() {
     		$$invalidate(2, isOn = !isOn);
-    		dispatch("changeLed", { col, row, isOn });
+    		dispatch("changeLed", { ledNumber, isOn });
     	}
 
     	$$self.$set = $$props => {
     		if ("isOn" in $$props) $$invalidate(2, isOn = $$props.isOn);
-    		if ("row" in $$props) $$invalidate(3, row = $$props.row);
-    		if ("col" in $$props) $$invalidate(4, col = $$props.col);
+    		if ("ledNumber" in $$props) $$invalidate(3, ledNumber = $$props.ledNumber);
     	};
 
     	let backgroundColor;
@@ -362,13 +360,13 @@ var app = (function () {
     		}
     	};
 
-    	return [backgroundColor, onChangeLed, isOn, row, col];
+    	return [backgroundColor, onChangeLed, isOn, ledNumber];
     }
 
     class Led extends SvelteComponent {
     	constructor(options) {
     		super();
-    		init(this, options, instance, create_fragment, safe_not_equal, { isOn: 2, row: 3, col: 4 });
+    		init(this, options, instance, create_fragment, safe_not_equal, { isOn: 2, ledNumber: 3 });
     	}
     }
 
@@ -17487,7 +17485,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (89:2) {#if showError}
+    // (90:2) {#if showError}
     function create_if_block(ctx) {
     	let div;
     	let t;
@@ -17496,7 +17494,7 @@ var app = (function () {
     		c() {
     			div = element("div");
     			t = text(/*errorMessage*/ ctx[2]);
-    			attr(div, "class", "row error svelte-6al7x0");
+    			attr(div, "class", "row error svelte-v9nv1m");
     		},
     		m(target, anchor) {
     			insert(target, div, anchor);
@@ -17511,14 +17509,13 @@ var app = (function () {
     	};
     }
 
-    // (101:6) {#each rowLeds as isOn, col}
+    // (102:6) {#each rowLeds as isOn, col}
     function create_each_block_1(ctx) {
     	let current;
 
     	const led = new Led({
     			props: {
-    				row: /*row*/ ctx[11],
-    				col: /*col*/ ctx[14],
+    				ledNumber: /*row*/ ctx[11] * 8 + /*col*/ ctx[14],
     				isOn: /*isOn*/ ctx[12]
     			}
     		});
@@ -17553,7 +17550,7 @@ var app = (function () {
     	};
     }
 
-    // (99:2) {#each leds as rowLeds, row}
+    // (100:2) {#each leds as rowLeds, row}
     function create_each_block(ctx) {
     	let section;
     	let current;
@@ -17576,7 +17573,7 @@ var app = (function () {
     				each_blocks[i].c();
     			}
 
-    			attr(section, "class", "svelte-6al7x0");
+    			attr(section, "class", "svelte-v9nv1m");
     		},
     		m(target, anchor) {
     			insert(target, section, anchor);
@@ -17656,9 +17653,6 @@ var app = (function () {
     	let t9;
     	let p;
     	let t10;
-    	let t11;
-    	let iframe;
-    	let iframe_src_value;
     	let current;
     	let dispose;
     	let if_block = /*showError*/ ctx[1] && create_if_block(ctx);
@@ -17700,18 +17694,11 @@ var app = (function () {
     			t9 = space();
     			p = element("p");
     			t10 = text(/*ledString*/ ctx[3]);
-    			t11 = space();
-    			iframe = element("iframe");
     			attr(button0, "class", "button-primary");
     			attr(button1, "class", "button-primary");
-    			attr(div0, "class", "row header svelte-6al7x0");
-    			attr(div1, "class", "row message svelte-6al7x0");
+    			attr(div0, "class", "row header svelte-v9nv1m");
+    			attr(div1, "class", "row message svelte-v9nv1m");
     			attr(main, "class", "container");
-    			attr(iframe, "width", "560");
-    			attr(iframe, "height", "315");
-    			if (iframe.src !== (iframe_src_value = "https://www.youtube.com/embed/FifWMKa8ACA")) attr(iframe, "src", iframe_src_value);
-    			attr(iframe, "frameborder", "0");
-    			iframe.allowFullscreen = true;
     		},
     		m(target, anchor) {
     			insert(target, main, anchor);
@@ -17735,8 +17722,6 @@ var app = (function () {
     			append(div1, t9);
     			append(div1, p);
     			append(p, t10);
-    			insert(target, t11, anchor);
-    			insert(target, iframe, anchor);
     			current = true;
 
     			dispose = [
@@ -17809,8 +17794,6 @@ var app = (function () {
     			if (detaching) detach(main);
     			if (if_block) if_block.d();
     			destroy_each(each_blocks, detaching);
-    			if (detaching) detach(t11);
-    			if (detaching) detach(iframe);
     			run_all(dispose);
     		}
     	};
@@ -17842,8 +17825,10 @@ var app = (function () {
     	}
 
     	function onChangeLed(e) {
-    		const { row, col, isOn } = e.detail;
-    		$$invalidate(0, leds[row][col] = isOn, leds);
+    		const { ledNumber, isOn } = e.detail;
+    		const rowNumber = Math.floor(ledNumber / 8);
+    		const columnNumber = ledNumber % 8;
+    		$$invalidate(0, leds[rowNumber][columnNumber] = isOn, leds);
     		$$invalidate(0, leds = [...leds]);
     	}
 
